@@ -5,6 +5,7 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+
 import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.io.StringReader;
@@ -18,7 +19,7 @@ import java.util.List;
 @Service
 public class CoronavirusData {
 
-    private static String DATA_URL="https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv";
+    private static String DATA_URL = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv";
     private List<LocationStats> allStats = new ArrayList<>();
 
     public List<LocationStats> getAllStats() {
@@ -44,12 +45,12 @@ public class CoronavirusData {
             LocationStats locStat = new LocationStats();
             locStat.setState(record.get("Province/State"));
             locStat.setCountry(record.get("Country/Region"));
-            int latestCases = Integer.parseInt(record.get(record.size()-1));
-            int prevDayCases = Integer.parseInt(record.get(record.size()-2));
+            int latestCases = Integer.parseInt(record.get(record.size() - 1));
+            int prevDayCases = Integer.parseInt(record.get(record.size() - 2));
             locStat.setLatestTotalCases(latestCases);
-            locStat.setDiffFromPrevDay(latestCases-prevDayCases);
+            locStat.setDiffFromPrevDay(latestCases - prevDayCases);
             newStats.add(locStat);
         }
-        this.allStats=newStats;
+        this.allStats = newStats;
     }
 }
